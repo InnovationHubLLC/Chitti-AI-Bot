@@ -16,7 +16,7 @@ export default function OnboardingStep3() {
   };
 
   const handleContinue = () => {
-    router.push("/onboarding/step-4");
+    router.push("/");
   };
 
   return (
