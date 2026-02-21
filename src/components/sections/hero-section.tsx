@@ -3,7 +3,7 @@ import { Play } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative bg-[var(--background-hero-gradient)] py-20 md:py-28 lg:py-36">
+    <section className="relative bg-gradient-to-br from-navy-50 via-white to-accent-50 py-20 md:py-28 lg:py-36">
       <div className="container mx-auto px-4 max-w-4xl text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy-900 mb-6 leading-tight">
           Every missed call is a missed deal. Chitti catches both.

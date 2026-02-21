@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@floating-ui/core": "^1.7.4",
+    "@floating-ui/utils": "^0.2.10",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-arrow": "^1.1.8",
     "@radix-ui/react-dismissable-layer": "^1.1.11",

@@ -35,8 +35,6 @@
   --color-accent-800: #8a2c0d;
   --color-accent-900: #73230d;
 
-  /* Custom gradients */
-  --background-hero-gradient: linear-gradient(135deg, #f0f4f8 0%, #ffffff 50%, #fff8f1 100%);
 }
 
 body {
