@@ -1,16 +1,8 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #102a43;
-}
+@theme {
+  --font-family-sans: var(--font-inter), system-ui, sans-serif;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-
-  /* Custom Navy colors */
   --color-navy-50: #f0f4f8;
   --color-navy-100: #d9e2ec;
   --color-navy-200: #bcccdc;
@@ -23,7 +15,6 @@
   --color-navy-900: #102a43;
   --color-navy-950: #0a1929;
 
-  /* Custom Accent colors */
   --color-accent-50: #fff8f1;
   --color-accent-100: #feecdc;
   --color-accent-200: #fcd9bd;
@@ -34,11 +25,9 @@
   --color-accent-700: #b43403;
   --color-accent-800: #8a2c0d;
   --color-accent-900: #73230d;
-
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  background: white;
+  color: #102a43;
 }
