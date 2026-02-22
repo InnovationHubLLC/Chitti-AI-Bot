@@ -144,14 +144,14 @@ export function BusinessInfoForm() {
         <FormField
           control={form.control}
           name="websiteUrl"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Website URL (Optional)</FormLabel>
               <FormControl>
                 <WebsiteScanner form={form} />
               </FormControl>
               <FormDescription>
-                We'll pull your services and pricing automatically
+                We&apos;ll pull your services and pricing automatically
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -168,7 +168,7 @@ export function BusinessInfoForm() {
                 <Input placeholder="(555) 123-4567" {...field} />
               </FormControl>
               <FormDescription>
-                We'll forward calls to you if the AI needs to escalate
+                We&apos;ll forward calls to you if the AI needs to escalate
               </FormDescription>
               <FormMessage />
             </FormItem>

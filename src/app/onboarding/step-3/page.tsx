@@ -44,7 +44,7 @@ export default function OnboardingStep3() {
                   When are you open?
                 </h3>
                 <p className="text-sm text-gray-500">
-                  Set your regular business hours. You can add split shifts by clicking "Add hours".
+                  Set your regular business hours. You can add split shifts by clicking &quot;Add hours&quot;.
                 </p>
               </div>
               <BusinessHoursEditor />

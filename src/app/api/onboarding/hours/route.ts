@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     await supabase.from("business_hours").delete().eq("business_id", businessId);
 
-    const hoursToInsert = hours.map((dayHours: any) => ({
+    const hoursToInsert = hours.map((dayHours: { dayOfWeek: number; isClosed: boolean; openTime: string | null; closeTime: string | null }) => ({
       business_id: businessId,
       day_of_week: dayHours.dayOfWeek,
       is_closed: dayHours.isClosed,

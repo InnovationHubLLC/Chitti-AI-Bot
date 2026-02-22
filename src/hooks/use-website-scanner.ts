@@ -54,7 +54,7 @@ export function useWebsiteScanner() {
         faqsCount: data.faqsCount,
         error: null,
       });
-    } catch (error) {
+    } catch {
       setState({
         status: "error",
         servicesCount: null,

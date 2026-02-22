@@ -87,7 +87,7 @@ export function CalendarIntegration() {
                 </div>
                 <div>
                   <CardTitle className="text-base">Manual Management</CardTitle>
-                  <CardDescription>I'll manage appointments myself</CardDescription>
+                  <CardDescription>I&apos;ll manage appointments myself</CardDescription>
                 </div>
               </div>
               {integrationType === "manual" && (
@@ -101,7 +101,7 @@ export function CalendarIntegration() {
           <CardContent>
             {integrationType === "manual" ? (
               <p className="text-sm text-gray-600">
-                Chitti will collect caller information and you'll manage appointments manually.
+                Chitti will collect caller information and you&apos;ll manage appointments manually.
               </p>
             ) : (
               <Button

@@ -10,10 +10,10 @@ export default function OnboardingStep1Page() {
       <Card>
         <CardHeader>
           <h1 className="text-2xl sm:text-3xl font-bold text-navy-900">
-            Let's set up your AI assistant
+            Let&apos;s set up your AI assistant
           </h1>
           <p className="text-muted-foreground mt-2">
-            We'll have Chitti ready to answer calls in about 10 minutes.
+            We&apos;ll have Chitti ready to answer calls in about 10 minutes.
           </p>
         </CardHeader>
         <CardContent>

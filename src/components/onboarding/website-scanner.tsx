@@ -47,7 +47,7 @@ export function WebsiteScanner({ form }: WebsiteScannerProps) {
         <div className="flex items-center gap-2 text-sm text-green-600">
           <Check className="h-4 w-4" />
           <span>
-            Found {servicesCount} services and {faqsCount} FAQs — you'll review
+            Found {servicesCount} services and {faqsCount} FAQs — you&apos;ll review
             these next
           </span>
         </div>
