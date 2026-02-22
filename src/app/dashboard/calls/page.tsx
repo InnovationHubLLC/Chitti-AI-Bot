@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { CallCard } from "@/components/calls/call-card";
 import { FilterBar } from "@/components/calls/filter-bar";
 import { StatsHeader } from "@/components/calls/stats-header";
@@ -12,6 +13,7 @@ import type { DateRange, LeadScore, SortOption } from "@/lib/types/calls";
 const PAGE_SIZE = 20;
 
 export default function CallsPage() {
+  const router = useRouter();
   const [dateRange, setDateRange] = useState<DateRange>("all");
   const [activeScores, setActiveScores] = useState<LeadScore[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -108,7 +110,11 @@ export default function CallsPage() {
         ) : (
           <div className="space-y-3">
             {visibleCalls.map((call) => (
-              <CallCard key={call.id} call={call} />
+              <CallCard
+                key={call.id}
+                call={call}
+                onClick={() => router.push(`/dashboard/calls/${call.id}`)}
+              />
             ))}
 
             {hasMore && (
