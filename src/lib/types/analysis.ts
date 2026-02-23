@@ -32,3 +32,20 @@ export interface CallCost {
   sttCost: number;
   totalCost: number;
 }
+
+export interface DetailedCallCost extends CallCost {
+  llmInputTokens: number;
+  llmOutputTokens: number;
+  ttsCharacters: number;
+  sttSeconds: number;
+  smsCost: number;
+}
+
+export interface CostTrackingInput {
+  callId: string;
+  businessId: string;
+  vapiCost: number;
+  claudeTokens: { input: number; output: number };
+  durationSeconds: number;
+  smsCount: number;
+}
