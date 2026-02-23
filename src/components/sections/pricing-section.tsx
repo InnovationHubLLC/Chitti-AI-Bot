@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Check } from "lucide-react";
 import {
   Card,
@@ -8,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const features = [
+const FEATURES = [
   "300 minutes included",
   "Full deal intelligence on every call",
   "Price threshold analysis",
@@ -18,7 +19,7 @@ const features = [
   "Works for any service industry",
 ];
 
-export function PricingSection() {
+export function PricingSection(): React.ReactElement {
   return (
     <section className="py-20 md:py-24 bg-white">
       <div className="container mx-auto px-4">
@@ -43,9 +44,9 @@ export function PricingSection() {
 
           <CardContent>
             <ul className="space-y-3 mt-6">
-              {features.map((feature, index) => (
-                <li key={index} className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-accent-500 flex-shrink-0" />
+              {FEATURES.map((feature) => (
+                <li key={feature} className="flex items-center gap-3">
+                  <Check className="size-5 text-accent-500 flex-shrink-0" />
                   <span className="text-navy-700">{feature}</span>
                 </li>
               ))}
@@ -53,8 +54,8 @@ export function PricingSection() {
           </CardContent>
 
           <CardFooter className="flex flex-col gap-2">
-            <Button className="w-full bg-accent-500 hover:bg-accent-600 text-white py-6 text-lg">
-              Start Free Trial
+            <Button asChild className="w-full bg-accent-500 hover:bg-accent-600 text-white py-6 text-lg">
+              <Link href="/sign-up">Start Free Trial</Link>
             </Button>
             <p className="text-xs text-navy-500 text-center mt-2">
               14-day free trial. No credit card. Cancel anytime.

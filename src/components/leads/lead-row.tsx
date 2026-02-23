@@ -1,10 +1,14 @@
 "use client";
 
 import { Phone, MessageSquare, UserCheck } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Lead } from "@/lib/constants/mock-leads";
 import type { LeadStatus } from "@/lib/types/calls";
+import { ScoreBadge } from "@/components/shared/score-badge";
+import { StatusBadge, STATUS_STYLES } from "@/components/shared/status-badge";
+import { DealScoreDisplay } from "@/components/shared/deal-score-display";
+import { PriceRangeDisplay } from "@/components/shared/price-range-display";
+import { formatRelativeTime } from "@/components/shared/time-ago";
 
 interface LeadRowProps {
   lead: Lead;
@@ -13,49 +17,9 @@ interface LeadRowProps {
   onClick: () => void;
 }
 
-const STATUS_CONFIG: Record<
-  LeadStatus,
-  { label: string; className: string }
-> = {
-  new: { label: "New", className: "bg-blue-100 text-blue-700 border-blue-200" },
-  contacted: {
-    label: "Contacted",
-    className: "bg-amber-100 text-amber-700 border-amber-200",
-  },
-  converted: {
-    label: "Converted",
-    className: "bg-emerald-100 text-emerald-700 border-emerald-200",
-  },
-  lost: { label: "Lost", className: "bg-gray-100 text-gray-500 border-gray-200" },
-};
-
 const STATUS_OPTIONS: LeadStatus[] = ["new", "contacted", "converted", "lost"];
 
-function formatPrice(num: number): string {
-  return `$${new Intl.NumberFormat("en-US").format(num)}`;
-}
-
-function formatRelativeTime(dateStr: string): string {
-  const date = new Date(dateStr);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffHours < 1) return "Just now";
-  if (diffHours < 24) return `${diffHours}h ago`;
-  if (diffDays === 1) return "Yesterday";
-  return `${diffDays}d ago`;
-}
-
-function scoreColor(score: number): string {
-  if (score >= 8) return "text-emerald-600";
-  if (score >= 5) return "text-amber-600";
-  return "text-navy-400";
-}
-
-export function LeadRow({ lead, rank, onStatusChange, onClick }: LeadRowProps) {
-  const status = STATUS_CONFIG[lead.status] ?? STATUS_CONFIG.new;
+export function LeadRow({ lead, rank, onStatusChange, onClick }: LeadRowProps): React.ReactElement {
   const isLost = lead.status === "lost";
   const isConverted = lead.status === "converted";
 
@@ -84,20 +48,17 @@ export function LeadRow({ lead, rank, onStatusChange, onClick }: LeadRowProps) {
 
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="text-center">
-          <p className={`text-xl font-bold ${scoreColor(lead.deal_intent_score)}`}>
-            {lead.deal_intent_score}/10
-          </p>
-          <p className="text-xs text-navy-400">
-            {formatPrice(lead.price_comfort_low)} -{" "}
-            {formatPrice(lead.price_comfort_high)}
-          </p>
+          <DealScoreDisplay score={lead.deal_intent_score} variant="text" className="text-xl" />
+          <PriceRangeDisplay
+            low={lead.price_comfort_low}
+            high={lead.price_comfort_high}
+            className="text-xs text-navy-400"
+          />
         </div>
 
         <div className="flex flex-col items-center gap-1">
           <div className="relative group">
-            <Badge className={`${status.className} text-xs cursor-pointer`}>
-              {status.label}
-            </Badge>
+            <StatusBadge status={lead.status} className="cursor-pointer" />
             <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-white border rounded-lg shadow-lg p-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10 min-w-[120px]">
               {STATUS_OPTIONS.filter((s) => s !== lead.status).map((s) => (
                 <button
@@ -108,7 +69,7 @@ export function LeadRow({ lead, rank, onStatusChange, onClick }: LeadRowProps) {
                   }}
                   className="w-full text-left px-3 py-1.5 text-xs rounded hover:bg-gray-50 text-navy-700"
                 >
-                  {STATUS_CONFIG[s].label}
+                  {STATUS_STYLES[s].label}
                 </button>
               ))}
             </div>
@@ -128,7 +89,7 @@ export function LeadRow({ lead, rank, onStatusChange, onClick }: LeadRowProps) {
             }}
             title="Call back"
           >
-            <Phone className="w-3.5 h-3.5" />
+            <Phone className="size-3.5" />
           </Button>
           <Button
             variant="ghost"
@@ -139,7 +100,7 @@ export function LeadRow({ lead, rank, onStatusChange, onClick }: LeadRowProps) {
             }}
             title="Send SMS"
           >
-            <MessageSquare className="w-3.5 h-3.5" />
+            <MessageSquare className="size-3.5" />
           </Button>
           <Button
             variant="ghost"
@@ -152,7 +113,7 @@ export function LeadRow({ lead, rank, onStatusChange, onClick }: LeadRowProps) {
             }}
             title="Mark contacted"
           >
-            <UserCheck className="w-3.5 h-3.5" />
+            <UserCheck className="size-3.5" />
           </Button>
         </div>
       </div>

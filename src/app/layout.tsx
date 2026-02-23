@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { Shell } from "@/components/layout/shell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,13 +31,11 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): React.ReactElement {
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <Header />
-        {children}
-        <Footer />
+        <Shell>{children}</Shell>
       </body>
     </html>
   );
