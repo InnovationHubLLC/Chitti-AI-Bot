@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Trophy } from "lucide-react";
 import {
@@ -11,9 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LeadRow } from "@/components/leads/lead-row";
-import { MOCK_LEADS } from "@/lib/constants/mock-leads";
 import type { Lead } from "@/lib/constants/mock-leads";
-import type { LeadStatus, LeadSortOption, DateRange } from "@/lib/types/calls";
+import type { Call, LeadStatus, LeadSortOption, DateRange } from "@/lib/types/calls";
 
 const STATUS_PILLS: { value: LeadStatus | "all"; label: string }[] = [
   { value: "all", label: "All" },
@@ -23,17 +22,77 @@ const STATUS_PILLS: { value: LeadStatus | "all"; label: string }[] = [
   { value: "lost", label: "Lost" },
 ];
 
+function getBusinessId(): string | null {
+  const match = document.cookie.match(/(?:^|;\s*)onboarding_business_id=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function callToLead(call: Call): Lead {
+  return {
+    id: call.id,
+    call_id: call.id,
+    caller_name: call.caller_name,
+    phone_number: call.phone_number,
+    service_requested: call.service_requested,
+    deal_intent_score: call.deal_intent_score ?? 0,
+    lead_score: call.lead_score ?? "WARM",
+    price_comfort_low: call.price_comfort_low ?? 0,
+    price_comfort_high: call.price_comfort_high ?? 0,
+    status: (call.status as LeadStatus) ?? "new",
+    created_at: call.created_at ?? new Date().toISOString(),
+  };
+}
+
 export default function LeadsPage() {
   const router = useRouter();
-  const [leads, setLeads] = useState<Lead[]>(MOCK_LEADS);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<LeadStatus | "all">("all");
   const [timeFilter, setTimeFilter] = useState<DateRange>("all");
   const [sortBy, setSortBy] = useState<LeadSortOption>("highest_score");
 
-  const handleStatusChange = (leadId: string, newStatus: LeadStatus) => {
+  const fetchLeads = useCallback(async () => {
+    const businessId = getBusinessId();
+    if (!businessId) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/dashboard/calls?businessId=${businessId}&minScore=5`);
+      const json = await res.json();
+      if (json.success) {
+        const callData: Call[] = json.data ?? [];
+        setLeads(callData.map(callToLead));
+      }
+    } catch (error) {
+      console.error("Failed to fetch leads:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLeads();
+  }, [fetchLeads]);
+
+  const handleStatusChange = async (leadId: string, newStatus: LeadStatus) => {
     setLeads((prev) =>
       prev.map((l) => (l.id === leadId ? { ...l, status: newStatus } : l))
     );
+
+    const businessId = getBusinessId();
+    if (!businessId) return;
+
+    try {
+      await fetch("/api/dashboard/calls", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: leadId, businessId, status: newStatus }),
+      });
+    } catch (error) {
+      console.error("Failed to update lead status:", error);
+    }
   };
 
   const filteredLeads = useMemo(() => {
@@ -69,6 +128,14 @@ export default function LeadsPage() {
 
     return result;
   }, [leads, statusFilter, timeFilter, sortBy]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy-600" />
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -1,24 +1,54 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { CallCard } from "@/components/calls/call-card";
 import { FilterBar } from "@/components/calls/filter-bar";
 import { StatsHeader } from "@/components/calls/stats-header";
 import { EmptyState } from "@/components/calls/empty-state";
 import { Button } from "@/components/ui/button";
-import { MOCK_CALLS } from "@/lib/constants/mock-calls";
-import type { DateRange, LeadScore, SortOption } from "@/lib/types/calls";
+import type { Call, DateRange, LeadScore, SortOption } from "@/lib/types/calls";
 
 const PAGE_SIZE = 20;
 
+function getBusinessId(): string | null {
+  const match = document.cookie.match(/(?:^|;\s*)onboarding_business_id=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 export default function CallsPage() {
   const router = useRouter();
+  const [calls, setCalls] = useState<Call[]>([]);
+  const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState<DateRange>("all");
   const [activeScores, setActiveScores] = useState<LeadScore[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const fetchCalls = useCallback(async () => {
+    const businessId = getBusinessId();
+    if (!businessId) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/dashboard/calls?businessId=${businessId}`);
+      const json = await res.json();
+      if (json.success) {
+        setCalls(json.data ?? []);
+      }
+    } catch (error) {
+      console.error("Failed to fetch calls:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCalls();
+  }, [fetchCalls]);
 
   const handleToggleScore = (score: LeadScore) => {
     setActiveScores((prev) =>
@@ -27,7 +57,7 @@ export default function CallsPage() {
   };
 
   const filteredCalls = useMemo(() => {
-    let result = [...MOCK_CALLS];
+    let result = [...calls];
 
     if (dateRange !== "all") {
       const now = new Date();
@@ -71,17 +101,25 @@ export default function CallsPage() {
     }
 
     return result;
-  }, [dateRange, activeScores, searchQuery, sortBy]);
+  }, [calls, dateRange, activeScores, searchQuery, sortBy]);
 
   const visibleCalls = filteredCalls.slice(0, visibleCount);
   const hasMore = visibleCount < filteredCalls.length;
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy-600" />
+      </div>
+    );
+  }
 
   return (
     <div>
       <div className="mb-2">
         <h1 className="text-2xl sm:text-3xl font-bold text-navy-900">Calls</h1>
         <div className="mt-2">
-          <StatsHeader calls={MOCK_CALLS} />
+          <StatsHeader calls={calls} />
         </div>
       </div>
 
