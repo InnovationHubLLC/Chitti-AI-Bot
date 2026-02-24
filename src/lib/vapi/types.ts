@@ -1,13 +1,13 @@
 export interface VapiModelConfig {
   provider: 'anthropic';
   model: string;
-  systemMessage: string;
+  systemPrompt: string;
   temperature: number;
   maxTokens: number;
 }
 
 export interface VapiVoiceConfig {
-  provider: 'elevenlabs';
+  provider: '11labs';
   voiceId: string;
   model: string;
   stability: number;
@@ -99,6 +99,33 @@ export interface FunctionCallResult {
   instruction: string;
   services?: Array<{ name: string; priceLow: number; priceHigh: number; unit: string }>;
   slots?: string[];
+}
+
+export interface VapiPhoneNumber {
+  id: string;
+  number: string;
+  assistantId: string | null;
+  createdAt: string;
+}
+
+export interface BuyPhoneNumberPayload {
+  areaCode?: string;
+  assistantId?: string;
+  serverUrl?: string;
+}
+
+export interface UpdatePhoneNumberPayload {
+  assistantId?: string;
+  serverUrl?: string;
+}
+
+export interface ImportPhoneNumberPayload {
+  provider: 'twilio' | 'vonage';
+  number: string;
+  twilioAccountSid?: string;
+  twilioAuthToken?: string;
+  assistantId?: string;
+  serverUrl?: string;
 }
 
 export interface CreateChittiAssistantParams {

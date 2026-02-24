@@ -107,17 +107,19 @@ export function buildAssistantPayload(
 
   const serverUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
 
+  const name = `chitti-${params.businessId}`.slice(0, 40);
+
   return {
-    name: `chitti-${params.businessId}`,
+    name,
     model: {
       provider: 'anthropic',
-      model: 'claude-sonnet-4-5-20250514',
-      systemMessage: fullSystemMessage,
+      model: 'claude-sonnet-4-6',
+      systemPrompt: fullSystemMessage,
       temperature: 0.7,
       maxTokens: 1024,
     },
     voice: {
-      provider: 'elevenlabs',
+      provider: '11labs',
       voiceId: ELEVENLABS_VOICE_ID,
       model: ELEVENLABS_MODEL,
       stability: 0.5,

@@ -1,4 +1,10 @@
-import type { CreateAssistantPayload, VapiAssistant } from './types';
+import type {
+  CreateAssistantPayload,
+  VapiAssistant,
+  VapiPhoneNumber,
+  BuyPhoneNumberPayload,
+  UpdatePhoneNumberPayload,
+} from './types';
 
 export class VapiApiError extends Error {
   constructor(
@@ -61,5 +67,17 @@ export class VapiClient {
       assistantId,
       customer: { number: phoneNumber },
     });
+  }
+
+  async listPhoneNumbers(): Promise<VapiPhoneNumber[]> {
+    return this.request<VapiPhoneNumber[]>('GET', '/phone-number');
+  }
+
+  async buyPhoneNumber(payload: BuyPhoneNumberPayload): Promise<VapiPhoneNumber> {
+    return this.request<VapiPhoneNumber>('POST', '/phone-number', payload);
+  }
+
+  async updatePhoneNumber(id: string, payload: UpdatePhoneNumberPayload): Promise<VapiPhoneNumber> {
+    return this.request<VapiPhoneNumber>('PATCH', `/phone-number/${id}`, payload);
   }
 }

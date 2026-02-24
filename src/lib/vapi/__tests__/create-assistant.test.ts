@@ -26,9 +26,9 @@ describe('buildAssistantPayload', () => {
     delete process.env.NEXT_PUBLIC_APP_URL;
   });
 
-  it('should use elevenlabs provider with Sarah voice', () => {
+  it('should use 11labs provider with Sarah voice', () => {
     const payload = buildAssistantPayload(defaultParams);
-    expect(payload.voice.provider).toBe('elevenlabs');
+    expect(payload.voice.provider).toBe('11labs');
     expect(payload.voice.voiceId).toBe('EXAVITQu4vr4xnSDxMaL');
     expect(payload.voice.model).toBe('eleven_turbo_v2');
     expect(payload.voice.stability).toBe(0.5);
@@ -38,7 +38,7 @@ describe('buildAssistantPayload', () => {
   it('should use anthropic provider with claude model', () => {
     const payload = buildAssistantPayload(defaultParams);
     expect(payload.model.provider).toBe('anthropic');
-    expect(payload.model.model).toBe('claude-sonnet-4-5-20250514');
+    expect(payload.model.model).toBe('claude-sonnet-4-6');
     expect(payload.model.temperature).toBe(0.7);
     expect(payload.model.maxTokens).toBe(1024);
   });
@@ -84,13 +84,13 @@ describe('buildAssistantPayload', () => {
 
   it('should append consent script to system message', () => {
     const payload = buildAssistantPayload(defaultParams);
-    expect(payload.model.systemMessage).toContain('This call may be recorded');
+    expect(payload.model.systemPrompt).toContain('This call may be recorded');
   });
 
   it('should not append consent section when consentScript is empty', () => {
     const params = { ...defaultParams, consentScript: '' };
     const payload = buildAssistantPayload(params);
-    expect(payload.model.systemMessage).not.toContain('CALL RECORDING CONSENT SCRIPT');
+    expect(payload.model.systemPrompt).not.toContain('CALL RECORDING CONSENT SCRIPT');
   });
 
   it('should set metadata with businessId and industry', () => {
