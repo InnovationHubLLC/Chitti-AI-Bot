@@ -46,11 +46,11 @@ export default function DashboardLayout({
   const isActive = (href: string): boolean => pathname.startsWith(href);
 
   return (
-    <div className="min-h-screen bg-gray-50/50 flex">
+    <div className="min-h-screen flex">
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -58,23 +58,31 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 h-full bg-navy-900 text-white flex flex-col transition-all duration-200",
+          "fixed top-0 left-0 z-50 h-full bg-[#0a1525] border-r border-[#1a2e4a] text-white flex flex-col transition-all duration-200",
           collapsed ? "w-16" : "w-56",
           mobileOpen ? "translate-x-0" : "-translate-x-full",
           "lg:translate-x-0 lg:sticky"
         )}
       >
         {/* Logo area */}
-        <div className="flex items-center justify-between h-14 px-4 border-b border-navy-700">
+        <div className="flex items-center justify-between h-14 px-4 border-b border-[#1a2e4a]">
           {!collapsed && (
-            <Link href="/dashboard/calls" className="text-lg font-bold tracking-tight">
-              Chitti
+            <Link href="/dashboard/calls" className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-accent-500 flex items-center justify-center shadow-[0_0_12px_rgba(255,90,31,0.4)]">
+                <span className="text-sm font-bold text-white">C</span>
+              </div>
+              <span className="text-lg font-bold tracking-tight text-white">Chitti</span>
             </Link>
+          )}
+          {collapsed && (
+            <div className="w-7 h-7 rounded-lg bg-accent-500 flex items-center justify-center shadow-[0_0_12px_rgba(255,90,31,0.4)] mx-auto">
+              <span className="text-sm font-bold text-white">C</span>
+            </div>
           )}
           <Button
             variant="ghost"
             size="icon"
-            className="text-navy-300 hover:text-white hover:bg-navy-800 hidden lg:flex"
+            className="text-[#6b8baf] hover:text-white hover:bg-[#111f33] hidden lg:flex"
             onClick={() => setCollapsed(!collapsed)}
           >
             {collapsed ? <ChevronRight className="size-4" /> : <ChevronLeft className="size-4" />}
@@ -82,7 +90,7 @@ export default function DashboardLayout({
           <Button
             variant="ghost"
             size="icon"
-            className="text-navy-300 hover:text-white hover:bg-navy-800 lg:hidden"
+            className="text-[#6b8baf] hover:text-white hover:bg-[#111f33] lg:hidden"
             onClick={() => setMobileOpen(false)}
           >
             <X className="size-4" />
@@ -101,10 +109,10 @@ export default function DashboardLayout({
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                    "relative flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
                     active
-                      ? "bg-navy-700 text-white"
-                      : "text-navy-300 hover:bg-navy-800 hover:text-white"
+                      ? "bg-[#1a2e4a] text-white before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-[3px] before:h-5 before:rounded-r-full before:bg-accent-500"
+                      : "text-[#6b8baf] hover:bg-[#111f33] hover:text-white"
                   )}
                 >
                   <Icon className="size-5 shrink-0" />
@@ -114,7 +122,7 @@ export default function DashboardLayout({
             })}
           </div>
 
-          <div className="border-t border-navy-700 pt-2 mt-2 space-y-1">
+          <div className="border-t border-[#1a2e4a] pt-2 mt-2 space-y-1">
             {BOTTOM_NAV_ITEMS.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);
@@ -124,10 +132,10 @@ export default function DashboardLayout({
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                    "relative flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
                     active
-                      ? "bg-navy-700 text-white"
-                      : "text-navy-300 hover:bg-navy-800 hover:text-white"
+                      ? "bg-[#1a2e4a] text-white before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-[3px] before:h-5 before:rounded-r-full before:bg-accent-500"
+                      : "text-[#6b8baf] hover:bg-[#111f33] hover:text-white"
                   )}
                 >
                   <Icon className="size-5 shrink-0" />
@@ -142,15 +150,21 @@ export default function DashboardLayout({
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile top bar */}
-        <div className="lg:hidden flex items-center h-14 px-4 border-b bg-white">
+        <div className="lg:hidden flex items-center h-14 px-4 border-b border-[#1a2e4a] bg-[#0a1525]">
           <Button
             variant="ghost"
             size="icon"
+            className="text-[#6b8baf] hover:text-white hover:bg-[#111f33]"
             onClick={() => setMobileOpen(true)}
           >
             <Menu className="size-5" />
           </Button>
-          <span className="ml-3 font-bold text-navy-900">Chitti</span>
+          <div className="ml-3 flex items-center gap-2">
+            <div className="w-6 h-6 rounded-md bg-accent-500 flex items-center justify-center shadow-[0_0_8px_rgba(255,90,31,0.3)]">
+              <span className="text-xs font-bold text-white">C</span>
+            </div>
+            <span className="font-bold text-white">Chitti</span>
+          </div>
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">

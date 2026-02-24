@@ -136,7 +136,7 @@ export function PricingTab({ items, onItemsChange }: PricingTabProps): React.Rea
             placeholder="Search services..."
           />
         </div>
-        <Button onClick={addItem} size="sm">
+        <Button onClick={addItem} size="sm" className="bg-accent-500 hover:bg-accent-600 text-white">
           <Plus className="mr-1.5 size-4" />
           Add Service
         </Button>
@@ -152,29 +152,29 @@ export function PricingTab({ items, onItemsChange }: PricingTabProps): React.Rea
       {filtered.length === 0 ? (
         <EmptyState message="No pricing items found" />
       ) : (
-        <div className="rounded-md border">
+        <div className="rounded-md border border-[#1e3050] overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-10" />
-                <TableHead>
-                  <button onClick={() => toggleSort("service")} className="flex items-center gap-1">
+              <TableRow className="border-[#1e3050] hover:bg-transparent">
+                <TableHead className="w-10 text-[#4a6585]" />
+                <TableHead className="text-[#4a6585]">
+                  <button onClick={() => toggleSort("service")} className="flex items-center gap-1 hover:text-[#8ba8c8]">
                     Service <ArrowUpDown className="size-3" />
                   </button>
                 </TableHead>
-                <TableHead>
-                  <button onClick={() => toggleSort("price")} className="flex items-center gap-1">
+                <TableHead className="text-[#4a6585]">
+                  <button onClick={() => toggleSort("price")} className="flex items-center gap-1 hover:text-[#8ba8c8]">
                     Price <ArrowUpDown className="size-3" />
                   </button>
                 </TableHead>
-                <TableHead>Duration</TableHead>
-                <TableHead>
-                  <button onClick={() => toggleSort("category")} className="flex items-center gap-1">
+                <TableHead className="text-[#4a6585]">Duration</TableHead>
+                <TableHead className="text-[#4a6585]">
+                  <button onClick={() => toggleSort("category")} className="flex items-center gap-1 hover:text-[#8ba8c8]">
                     Category <ArrowUpDown className="size-3" />
                   </button>
                 </TableHead>
-                <TableHead>Source</TableHead>
-                <TableHead className="w-24">Actions</TableHead>
+                <TableHead className="text-[#4a6585]">Source</TableHead>
+                <TableHead className="w-24 text-[#4a6585]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -140,23 +140,23 @@ export default function LeadsPage() {
   return (
     <div>
       <div className="mb-2">
-        <h1 className="text-2xl sm:text-3xl font-bold text-navy-900">Leads</h1>
-        <p className="text-sm text-navy-400 mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">Leads</h1>
+        <p className="text-sm text-[#6b8baf] mt-1">
           Ranked by deal potential. Call the top ones first.
         </p>
       </div>
 
-      <div className="sticky top-[73px] z-30 bg-white/95 backdrop-blur-sm border-b border-gray-100 -mx-4 px-4 sm:-mx-6 sm:px-6 py-4">
+      <div className="sticky top-[73px] z-30 bg-gradient-to-b from-surface-base/95 to-surface-base/80 backdrop-blur-sm border-b border-border-dim -mx-4 px-4 sm:-mx-6 sm:px-6 py-4">
         <div className="flex flex-col gap-3">
           <div className="flex flex-col sm:flex-row gap-3">
             <Select
               value={timeFilter}
               onValueChange={(v) => setTimeFilter(v as DateRange)}
             >
-              <SelectTrigger className="w-full sm:w-[160px]">
+              <SelectTrigger className="w-full sm:w-[160px] bg-[#0d1726] border-[#1e3050] text-white">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#0d1726] border-[#1e3050]">
                 <SelectItem value="week">This Week</SelectItem>
                 <SelectItem value="month">This Month</SelectItem>
                 <SelectItem value="all">All Time</SelectItem>
@@ -167,10 +167,10 @@ export default function LeadsPage() {
               value={sortBy}
               onValueChange={(v) => setSortBy(v as LeadSortOption)}
             >
-              <SelectTrigger className="w-full sm:w-[180px]">
+              <SelectTrigger className="w-full sm:w-[180px] bg-[#0d1726] border-[#1e3050] text-white">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#0d1726] border-[#1e3050]">
                 <SelectItem value="highest_score">Highest Score</SelectItem>
                 <SelectItem value="newest">Most Recent</SelectItem>
                 <SelectItem value="highest_value">Highest Value</SelectItem>
@@ -185,8 +185,8 @@ export default function LeadsPage() {
                 onClick={() => setStatusFilter(pill.value)}
                 className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
                   statusFilter === pill.value
-                    ? "bg-navy-900 text-white border-navy-900"
-                    : "bg-gray-50 text-navy-500 border-gray-200 hover:border-navy-300"
+                    ? "bg-violet-500/15 text-violet-400 border-violet-500/30"
+                    : "bg-[#0d1726] text-[#4a6585] border-[#1e3050] hover:border-[#2a4268]"
                 }`}
               >
                 {pill.label}
@@ -199,13 +199,16 @@ export default function LeadsPage() {
       <div className="mt-6">
         {filteredLeads.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-16 h-16 rounded-full bg-navy-50 flex items-center justify-center mb-5">
-              <Trophy className="w-8 h-8 text-navy-300" />
+            <div className="relative mb-6">
+              <div className="absolute inset-0 rounded-2xl bg-violet-500/10 blur-2xl scale-150" />
+              <div className="relative w-16 h-16 rounded-2xl bg-[#0d1726] border border-[#1e3050] flex items-center justify-center shadow-[0_0_24px_rgba(124,58,237,0.2)]">
+                <Trophy className="w-7 h-7 text-violet-400" />
+              </div>
             </div>
-            <h3 className="text-lg font-semibold text-navy-800 mb-2">
-              No leads yet
+            <h3 className="text-lg font-semibold text-white mb-2">
+              Your pipeline starts here
             </h3>
-            <p className="text-sm text-navy-400 max-w-sm">
+            <p className="text-sm text-[#6b8baf] max-w-sm">
               Calls will appear here ranked by deal potential once Chitti starts
               answering.
             </p>

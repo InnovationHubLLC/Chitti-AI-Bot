@@ -11,9 +11,9 @@ interface ConfidenceBadgeProps {
 }
 
 const CONFIDENCE_STYLES: Record<string, { bg: string; text: string; border: string; dot: string }> = {
-  HIGH: { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200", dot: "bg-emerald-500" },
-  MEDIUM: { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200", dot: "bg-amber-400" },
-  LOW: { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200", dot: "bg-gray-300" },
+  HIGH: { bg: "bg-emerald-500/15", text: "text-emerald-400", border: "border-emerald-500/30", dot: "bg-emerald-400" },
+  MEDIUM: { bg: "bg-amber-500/15", text: "text-amber-400", border: "border-amber-500/30", dot: "bg-amber-400" },
+  LOW: { bg: "bg-gray-500/15", text: "text-gray-400", border: "border-gray-500/30", dot: "bg-gray-500" },
 };
 
 export function ConfidenceBadge({ level, showLabel = true, className }: ConfidenceBadgeProps): React.ReactElement {

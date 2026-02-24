@@ -25,9 +25,84 @@
   --color-accent-700: #b43403;
   --color-accent-800: #8a2c0d;
   --color-accent-900: #73230d;
+
+  --color-surface-base: #080f1a;
+  --color-surface-raised: #0a1525;
+  --color-surface-overlay: #0d1726;
+  --color-surface-subtle: #111f33;
+  --color-border-dim: #1e3050;
+  --color-border-mid: #2a4268;
+  --color-text-muted: #4a6585;
+  --color-text-secondary: #6b8baf;
+  --color-text-tertiary: #8ba8c8;
+  --color-text-primary: #c8daf0;
+
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #7c3aed;
 }
 
 body {
-  background: white;
-  color: #102a43;
+  background: #080f1a;
+  color: #c8daf0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 10%, rgba(124, 58, 237, 0.08), transparent),
+    radial-gradient(ellipse 60% 50% at 90% 90%, rgba(255, 90, 31, 0.05), transparent);
+  pointer-events: none;
+}
+
+/* Glass card utilities */
+.card-glass {
+  background: rgba(13, 23, 38, 0.6);
+  border: 1px solid #1e3050;
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+}
+
+.card-elevated {
+  background: rgba(10, 21, 37, 0.8);
+  border: 1px solid #1e3050;
+  border-radius: 0.75rem;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card-glass-hover {
+  transition: all 0.2s ease;
+}
+.card-glass-hover:hover {
+  background: rgba(17, 31, 51, 0.7);
+  border-color: #2a4268;
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* CTA glow animation */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 16px rgba(255, 90, 31, 0.3), 0 0 4px rgba(255, 90, 31, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(255, 90, 31, 0.5), 0 0 8px rgba(255, 90, 31, 0.3);
+  }
+}
+
+.glow-cta {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* Focus visible outline */
+*:focus-visible {
+  outline: 2px solid rgba(124, 58, 237, 0.6);
+  outline-offset: 2px;
 }

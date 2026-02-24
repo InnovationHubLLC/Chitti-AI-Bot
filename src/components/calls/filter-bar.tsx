@@ -23,9 +23,9 @@ interface FilterBarProps {
 }
 
 const SCORE_PILLS: { value: LeadScore; label: string; activeClass: string }[] = [
-  { value: "HOT", label: "Hot", activeClass: "bg-red-100 text-red-700 border-red-300" },
-  { value: "WARM", label: "Warm", activeClass: "bg-amber-100 text-amber-700 border-amber-300" },
-  { value: "COLD", label: "Cold", activeClass: "bg-sky-100 text-sky-700 border-sky-300" },
+  { value: "HOT", label: "Hot", activeClass: "bg-red-500/15 text-red-400 border-red-500/30 shadow-[0_0_8px_rgba(239,68,68,0.15)]" },
+  { value: "WARM", label: "Warm", activeClass: "bg-amber-500/15 text-amber-400 border-amber-500/30 shadow-[0_0_8px_rgba(245,158,11,0.15)]" },
+  { value: "COLD", label: "Cold", activeClass: "bg-sky-500/15 text-sky-400 border-sky-500/30 shadow-[0_0_8px_rgba(14,165,233,0.15)]" },
 ];
 
 export function FilterBar({
@@ -39,24 +39,24 @@ export function FilterBar({
   onSortChange,
 }: FilterBarProps) {
   return (
-    <div className="sticky top-[73px] z-30 bg-white/95 backdrop-blur-sm border-b border-gray-100 -mx-4 px-4 sm:-mx-6 sm:px-6 py-4">
+    <div className="sticky top-[73px] z-30 bg-gradient-to-b from-surface-base/95 to-surface-base/80 backdrop-blur-sm border-b border-border-dim -mx-4 px-4 sm:-mx-6 sm:px-6 py-4">
       <div className="flex flex-col gap-3">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-navy-300" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4a6585]" />
             <Input
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search by name, phone, or service..."
-              className="pl-9"
+              className="pl-9 bg-[#0d1726] border-[#1e3050] text-white placeholder:text-[#4a6585]"
             />
           </div>
 
           <Select value={dateRange} onValueChange={(v) => onDateRangeChange(v as DateRange)}>
-            <SelectTrigger className="w-full sm:w-[160px]">
+            <SelectTrigger className="w-full sm:w-[160px] bg-[#0d1726] border-[#1e3050] text-white">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-[#0d1726] border-[#1e3050]">
               <SelectItem value="today">Today</SelectItem>
               <SelectItem value="week">This Week</SelectItem>
               <SelectItem value="month">This Month</SelectItem>
@@ -65,10 +65,10 @@ export function FilterBar({
           </Select>
 
           <Select value={sortBy} onValueChange={(v) => onSortChange(v as SortOption)}>
-            <SelectTrigger className="w-full sm:w-[180px]">
+            <SelectTrigger className="w-full sm:w-[180px] bg-[#0d1726] border-[#1e3050] text-white">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-[#0d1726] border-[#1e3050]">
               <SelectItem value="newest">Newest first</SelectItem>
               <SelectItem value="highest_score">Highest score first</SelectItem>
             </SelectContent>
@@ -76,7 +76,7 @@ export function FilterBar({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-navy-400 mr-1">Lead score:</span>
+          <span className="text-xs font-medium text-[#4a6585] mr-1">Lead score:</span>
           {SCORE_PILLS.map((pill) => {
             const isActive = activeScores.length === 0 || activeScores.includes(pill.value);
             return (
@@ -86,7 +86,7 @@ export function FilterBar({
                 className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
                   isActive
                     ? pill.activeClass
-                    : "bg-gray-50 text-navy-400 border-gray-200 hover:border-navy-300"
+                    : "bg-[#0d1726] text-[#4a6585] border-[#1e3050] hover:border-[#2a4268]"
                 }`}
               >
                 {pill.label}
@@ -96,7 +96,7 @@ export function FilterBar({
           {activeScores.length > 0 && (
             <button
               onClick={() => activeScores.forEach(onToggleScore)}
-              className="text-xs text-navy-400 hover:text-navy-600 ml-1"
+              className="text-xs text-[#6b8baf] hover:text-white ml-1"
             >
               Clear
             </button>

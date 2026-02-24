@@ -85,8 +85,8 @@ export default function AnalyticsPage(): React.ReactElement {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-navy-900">Analytics</h1>
-          <p className="text-sm text-gray-500">Track your call performance and lead metrics</p>
+          <h1 className="text-2xl font-bold text-white">Analytics</h1>
+          <p className="text-sm text-[#6b8baf]">Track your call performance and lead metrics</p>
         </div>
         <TimePeriodSelector value={timePeriod} onChange={setTimePeriod} />
       </div>

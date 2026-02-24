@@ -29,13 +29,13 @@ describe("StatCard", () => {
     render(<StatCard label="Test" value="100" trend={5} icon={Phone} />);
 
     const trendText = screen.getByText("+5%");
-    expect(trendText).toHaveClass("text-green-600");
+    expect(trendText).toHaveClass("text-emerald-400");
   });
 
   it("should apply red color for negative trends", () => {
     render(<StatCard label="Test" value="100" trend={-3} icon={Phone} />);
 
     const trendText = screen.getByText("-3%");
-    expect(trendText).toHaveClass("text-red-500");
+    expect(trendText).toHaveClass("text-red-400");
   });
 });

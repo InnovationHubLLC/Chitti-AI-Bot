@@ -1,24 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { PhoneOff, ArrowRight } from "lucide-react";
+import { Phone, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function EmptyState() {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-16 h-16 rounded-full bg-navy-50 flex items-center justify-center mb-5">
-        <PhoneOff className="w-8 h-8 text-navy-300" />
+      <div className="relative mb-6">
+        <div className="absolute inset-0 rounded-2xl bg-violet-500/10 blur-2xl scale-150" />
+        <div className="absolute inset-0 rounded-2xl bg-accent-500/5 blur-xl scale-125" />
+        <div className="relative w-16 h-16 rounded-2xl bg-[#0d1726] border border-[#1e3050] flex items-center justify-center shadow-[0_0_24px_rgba(124,58,237,0.2),0_0_48px_rgba(124,58,237,0.1)]">
+          <Phone className="w-7 h-7 text-violet-400" />
+        </div>
       </div>
-      <h3 className="text-lg font-semibold text-navy-800 mb-2">
-        No calls yet
+      <h3 className="text-lg font-semibold text-white mb-2">
+        Chitti is ready to answer
       </h3>
-      <p className="text-sm text-navy-400 max-w-sm mb-6">
-        Once you set up call forwarding, your calls will appear here with full
-        analysis and lead scoring.
+      <p className="text-sm text-[#6b8baf] max-w-sm mb-6">
+        Set up call forwarding and your calls will appear here with full
+        analysis, lead scoring, and AI-powered insights.
       </p>
       <Button
-        className="bg-accent-500 hover:bg-accent-600 text-white"
+        className="bg-accent-500 hover:bg-accent-600 text-white glow-cta"
         asChild
       >
         <Link href="/onboarding/success">

@@ -55,15 +55,15 @@ export default function CallDetailPage() {
   if (!call) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-lg font-semibold text-navy-800 mb-2">
+        <h2 className="text-lg font-semibold text-white mb-2">
           Call not found
         </h2>
-        <p className="text-sm text-navy-400 mb-4">
+        <p className="text-sm text-[#6b8baf] mb-4">
           This call may have been removed or the link is incorrect.
         </p>
         <button
           onClick={() => router.push("/dashboard/calls")}
-          className="text-accent-500 hover:text-accent-600 text-sm font-medium"
+          className="text-accent-500 hover:text-accent-400 text-sm font-medium"
         >
           Back to Calls
         </button>
@@ -73,15 +73,15 @@ export default function CallDetailPage() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <nav className="flex items-center gap-1.5 text-sm text-navy-400 mb-6">
+      <nav className="flex items-center gap-1.5 text-sm text-[#6b8baf] mb-6">
         <Link
           href="/dashboard/calls"
-          className="hover:text-navy-600 transition-colors"
+          className="hover:text-white transition-colors"
         >
           Calls
         </Link>
         <ChevronRight className="w-3.5 h-3.5" />
-        <span className="text-navy-700 font-medium truncate">
+        <span className="text-white font-medium truncate">
           {call.caller_name ?? "Unknown Caller"} —{" "}
           {call.service_requested ?? "General Inquiry"}
         </span>
@@ -113,10 +113,10 @@ export default function CallDetailPage() {
         />
       </div>
 
-      <div className="mt-8 border-t pt-6">
+      <div className="mt-8 border-t border-[#1e3050] pt-6">
         <Accordion type="multiple" defaultValue={["qualification"]}>
-          <AccordionItem value="qualification">
-            <AccordionTrigger className="text-base font-semibold text-navy-900">
+          <AccordionItem value="qualification" className="border-[#1e3050]">
+            <AccordionTrigger className="text-base font-semibold text-white hover:text-white">
               Qualification Details
             </AccordionTrigger>
             <AccordionContent>
@@ -124,8 +124,8 @@ export default function CallDetailPage() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="budget">
-            <AccordionTrigger className="text-base font-semibold text-navy-900">
+          <AccordionItem value="budget" className="border-[#1e3050]">
+            <AccordionTrigger className="text-base font-semibold text-white hover:text-white">
               Budget Signals
             </AccordionTrigger>
             <AccordionContent>
@@ -136,8 +136,8 @@ export default function CallDetailPage() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="transcript">
-            <AccordionTrigger className="text-base font-semibold text-navy-900">
+          <AccordionItem value="transcript" className="border-[#1e3050]">
+            <AccordionTrigger className="text-base font-semibold text-white hover:text-white">
               Full Transcript
             </AccordionTrigger>
             <AccordionContent>
@@ -145,8 +145,8 @@ export default function CallDetailPage() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="feedback">
-            <AccordionTrigger className="text-base font-semibold text-navy-900">
+          <AccordionItem value="feedback" className="border-[#1e3050]">
+            <AccordionTrigger className="text-base font-semibold text-white hover:text-white">
               Owner Feedback
             </AccordionTrigger>
             <AccordionContent>

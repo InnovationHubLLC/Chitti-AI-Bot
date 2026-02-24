@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { PricingItem, FaqItem } from "@/lib/types/knowledge-base";
 import { PricingTab } from "@/components/knowledge-base/pricing-tab";
 import { FaqTab } from "@/components/knowledge-base/faq-tab";
+import { cn } from "@/lib/utils";
 
 interface PricingRow {
   id: string;
@@ -58,10 +58,18 @@ function mapFaq(row: FaqRow): FaqItem {
   };
 }
 
+const TABS = [
+  { value: "pricing", label: "Pricing Table" },
+  { value: "faqs", label: "FAQs & Content" },
+] as const;
+
+type TabValue = (typeof TABS)[number]["value"];
+
 export default function KnowledgeBasePage(): React.ReactElement {
   const [pricingItems, setPricingItems] = useState<PricingItem[]>([]);
   const [faqItems, setFaqItems] = useState<FaqItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<TabValue>("pricing");
 
   const fetchData = useCallback(async () => {
     const businessId = getBusinessId();
@@ -95,7 +103,6 @@ export default function KnowledgeBasePage(): React.ReactElement {
     const prev = pricingItems;
     setPricingItems(items);
 
-    // Detect added item (new item not in prev)
     const added = items.find((item) => !prev.some((p) => p.id === item.id));
     if (added) {
       try {
@@ -119,7 +126,6 @@ export default function KnowledgeBasePage(): React.ReactElement {
       return;
     }
 
-    // Detect deleted item
     const deleted = prev.find((p) => !items.some((item) => item.id === p.id));
     if (deleted) {
       try {
@@ -134,7 +140,6 @@ export default function KnowledgeBasePage(): React.ReactElement {
       return;
     }
 
-    // Detect updated item
     const updated = items.find((item) => {
       const original = prev.find((p) => p.id === item.id);
       return original && JSON.stringify(original) !== JSON.stringify(item);
@@ -160,7 +165,6 @@ export default function KnowledgeBasePage(): React.ReactElement {
     const prev = faqItems;
     setFaqItems(items);
 
-    // Detect added
     const added = items.find((item) => !prev.some((p) => p.id === item.id));
     if (added) {
       try {
@@ -184,7 +188,6 @@ export default function KnowledgeBasePage(): React.ReactElement {
       return;
     }
 
-    // Detect deleted
     const deleted = prev.find((p) => !items.some((item) => item.id === p.id));
     if (deleted) {
       try {
@@ -199,7 +202,6 @@ export default function KnowledgeBasePage(): React.ReactElement {
       return;
     }
 
-    // Detect updated
     const updated = items.find((item) => {
       const original = prev.find((p) => p.id === item.id);
       return original && JSON.stringify(original) !== JSON.stringify(item);
@@ -221,7 +223,7 @@ export default function KnowledgeBasePage(): React.ReactElement {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-navy-600" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-500" />
       </div>
     );
   }
@@ -229,26 +231,36 @@ export default function KnowledgeBasePage(): React.ReactElement {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-navy-900">Knowledge Base</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-white">Knowledge Base</h1>
+        <p className="text-sm text-[#6b8baf]">
           Manage pricing and FAQs that Chitti uses during calls
         </p>
       </div>
 
-      <Tabs defaultValue="pricing">
-        <TabsList>
-          <TabsTrigger value="pricing">Pricing Table</TabsTrigger>
-          <TabsTrigger value="faqs">FAQs & Content</TabsTrigger>
-        </TabsList>
+      {/* Dark segment control tabs */}
+      <div className="flex items-center gap-1 rounded-lg bg-[#0a1525] border border-[#1e3050] p-1 w-fit">
+        {TABS.map((tab) => (
+          <button
+            key={tab.value}
+            onClick={() => setActiveTab(tab.value)}
+            className={cn(
+              "rounded-md px-4 py-1.5 text-sm font-medium transition-colors",
+              activeTab === tab.value
+                ? "bg-[#1a2e4a] text-white border border-[#2a4268]"
+                : "text-[#6b8baf] hover:text-white"
+            )}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
-        <TabsContent value="pricing" className="mt-6">
-          <PricingTab items={pricingItems} onItemsChange={handlePricingChange} />
-        </TabsContent>
-
-        <TabsContent value="faqs" className="mt-6">
-          <FaqTab items={faqItems} onItemsChange={handleFaqChange} />
-        </TabsContent>
-      </Tabs>
+      {activeTab === "pricing" && (
+        <PricingTab items={pricingItems} onItemsChange={handlePricingChange} />
+      )}
+      {activeTab === "faqs" && (
+        <FaqTab items={faqItems} onItemsChange={handleFaqChange} />
+      )}
     </div>
   );
 }

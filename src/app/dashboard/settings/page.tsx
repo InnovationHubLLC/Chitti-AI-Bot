@@ -191,8 +191,8 @@ export default function SettingsPage(): React.ReactElement {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-navy-900">Settings</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-white">Settings</h1>
+        <p className="text-sm text-[#6b8baf]">
           Manage your business profile, hours, notifications, and billing
         </p>
       </div>

@@ -9,7 +9,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ServiceBreakdown } from "@/lib/types/analytics";
 
 interface TopServicesChartProps {
@@ -18,26 +17,26 @@ interface TopServicesChartProps {
 
 export function TopServicesChart({ data }: TopServicesChartProps): React.ReactElement {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-base">Top Services Inquired</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={280}>
-          <BarChart data={data} layout="vertical" margin={{ top: 4, right: 4, bottom: 0, left: 8 }}>
-            <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-            <XAxis type="number" tick={{ fontSize: 12 }} />
-            <YAxis dataKey="service" type="category" tick={{ fontSize: 12 }} width={90} />
-            <Tooltip
-              formatter={(value, _name, props) => [
-                `${value} calls (${(props.payload as ServiceBreakdown).percentage}%)`,
-                "Inquiries",
-              ]}
-            />
-            <Bar dataKey="count" fill="#ff5a1f" name="Inquiries" radius={[0, 4, 4, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
+    <div className="card-elevated p-6">
+      <div className="mb-4">
+        <h3 className="text-base font-semibold text-white">Top Services Inquired</h3>
+        <p className="text-xs text-[#4a6585] mt-0.5">Most requested services</p>
+      </div>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={data} layout="vertical" margin={{ top: 4, right: 4, bottom: 0, left: 8 }}>
+          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#1e3050" />
+          <XAxis type="number" tick={{ fontSize: 12, fill: "#4a6585" }} axisLine={false} tickLine={false} />
+          <YAxis dataKey="service" type="category" tick={{ fontSize: 12, fill: "#4a6585" }} width={90} axisLine={false} tickLine={false} />
+          <Tooltip
+            contentStyle={{ backgroundColor: "#0d1726", border: "1px solid #1e3050", borderRadius: "8px", color: "#c8daf0" }}
+            formatter={(value, _name, props) => [
+              `${value} calls (${(props.payload as ServiceBreakdown).percentage}%)`,
+              "Inquiries",
+            ]}
+          />
+          <Bar dataKey="count" fill="#ff5a1f" name="Inquiries" radius={[0, 4, 4, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

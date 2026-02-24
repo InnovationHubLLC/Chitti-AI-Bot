@@ -117,7 +117,7 @@ export default function CallsPage() {
   return (
     <div>
       <div className="mb-2">
-        <h1 className="text-2xl sm:text-3xl font-bold text-navy-900">Calls</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">Calls</h1>
         <div className="mt-2">
           <StatsHeader calls={calls} />
         </div>
@@ -138,7 +138,7 @@ export default function CallsPage() {
         {filteredCalls.length === 0 ? (
           searchQuery || activeScores.length > 0 || dateRange !== "all" ? (
             <div className="text-center py-16">
-              <p className="text-navy-400">
+              <p className="text-[#6b8baf]">
                 No calls match your filters. Try adjusting your search.
               </p>
             </div>

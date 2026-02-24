@@ -2,18 +2,10 @@
 
 import { useState } from "react";
 import type React from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardAction,
-} from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import { Pencil, Clock } from "lucide-react";
 import { BusinessHoursEditor } from "@/components/onboarding/business-hours-editor";
 import type { DayHours } from "@/lib/types/settings";
 
@@ -49,42 +41,43 @@ export function HoursSection({
   }
 
   function handleSave(): void {
-    // BusinessHoursEditor manages its own state internally,
-    // so we pass the current hours prop through on save.
-    // In a real integration, we would lift state or use a ref.
     onSave(hours, draftGreeting);
     setIsEditing(false);
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Business Hours</CardTitle>
-        <CardDescription>
-          Set your operating hours and after-hours greeting message.
-        </CardDescription>
+    <div className="card-elevated">
+      <div className="flex items-center justify-between p-5 border-b border-[#1e3050]">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-violet-500/15 flex items-center justify-center shadow-[0_0_12px_rgba(124,58,237,0.2)]">
+            <Clock className="size-5 text-violet-400" />
+          </div>
+          <div>
+            <h3 className="text-base font-semibold text-white">Business Hours</h3>
+            <p className="text-xs text-[#6b8baf]">Set your operating hours and after-hours greeting message.</p>
+          </div>
+        </div>
         {!isEditing && (
-          <CardAction>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleEdit}
-              aria-label="Edit business hours"
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
-          </CardAction>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleEdit}
+            aria-label="Edit business hours"
+            className="text-[#6b8baf] hover:text-white hover:bg-[#111f33]"
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
         )}
-      </CardHeader>
-      <CardContent>
+      </div>
+      <div className="p-5">
         {isEditing ? (
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Weekly Schedule</Label>
+              <Label className="text-xs uppercase tracking-wider text-[#6b8baf]">Weekly Schedule</Label>
               <BusinessHoursEditor />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="after-hours-greeting">
+              <Label htmlFor="after-hours-greeting" className="text-xs uppercase tracking-wider text-[#6b8baf]">
                 After-Hours Greeting
               </Label>
               <Textarea
@@ -93,13 +86,14 @@ export function HoursSection({
                 onChange={(e) => setDraftGreeting(e.target.value)}
                 rows={3}
                 placeholder="Enter your after-hours greeting message..."
+                className="bg-[#080f1a] border-[#1e3050] text-white placeholder:text-[#4a6585]"
               />
             </div>
             <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" onClick={handleCancel}>
+              <Button variant="outline" onClick={handleCancel} className="border-[#1e3050] text-[#8ba8c8] hover:bg-[#111f33]">
                 Cancel
               </Button>
-              <Button onClick={handleSave}>Save</Button>
+              <Button onClick={handleSave} className="bg-accent-500 hover:bg-accent-600 text-white glow-cta">Save</Button>
             </div>
           </div>
         ) : (
@@ -110,28 +104,24 @@ export function HoursSection({
                   key={day.day}
                   className="flex items-center justify-between text-sm"
                 >
-                  <span className="font-medium w-28">{day.day}</span>
-                  <span
-                    className={
-                      day.isClosed ? "text-muted-foreground" : "text-foreground"
-                    }
-                  >
+                  <span className="font-medium w-28 text-[#c8daf0]">{day.day}</span>
+                  <span className={day.isClosed ? "text-[#4a6585]" : "text-[#8ba8c8]"}>
                     {formatTimeSlots(day)}
                   </span>
                 </div>
               ))}
             </div>
-            <div className="space-y-1 pt-2 border-t">
-              <Label className="text-muted-foreground text-xs">
+            <div className="space-y-1 pt-2 border-t border-[#1e3050]">
+              <Label className="text-xs uppercase tracking-wider text-[#6b8baf]">
                 After-Hours Greeting
               </Label>
-              <p className="text-sm font-medium">
+              <p className="text-sm font-medium text-[#c8daf0]">
                 {greeting || "No greeting message set."}
               </p>
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

@@ -17,7 +17,7 @@ const PERIODS: { value: TimePeriod; label: string }[] = [
 
 export function TimePeriodSelector({ value, onChange }: TimePeriodSelectorProps): React.ReactElement {
   return (
-    <div className="flex items-center gap-1 rounded-lg bg-gray-100 p-1" role="group" aria-label="Time period">
+    <div className="flex items-center gap-1 rounded-lg bg-[#0a1525] border border-[#1e3050] p-1" role="group" aria-label="Time period">
       {PERIODS.map((period) => (
         <button
           key={period.value}
@@ -25,8 +25,8 @@ export function TimePeriodSelector({ value, onChange }: TimePeriodSelectorProps)
           className={cn(
             "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
             value === period.value
-              ? "bg-white text-navy-900 shadow-sm"
-              : "text-gray-500 hover:text-gray-700"
+              ? "bg-[#1a2e4a] text-white border border-[#2a4268]"
+              : "text-[#6b8baf] hover:text-white"
           )}
           aria-pressed={value === period.value}
         >

@@ -126,7 +126,7 @@ export function FaqTab({ items, onItemsChange }: FaqTabProps): React.ReactElemen
             placeholder="Search FAQs..."
           />
         </div>
-        <Button onClick={addItem} size="sm">
+        <Button onClick={addItem} size="sm" className="bg-accent-500 hover:bg-accent-600 text-white">
           <Plus className="mr-1.5 size-4" />
           Add FAQ
         </Button>
@@ -139,10 +139,10 @@ export function FaqTab({ items, onItemsChange }: FaqTabProps): React.ReactElemen
             key={cat.value}
             onClick={() => setCategory(cat.value)}
             className={cn(
-              "rounded-full px-3 py-1 text-xs font-medium transition-colors",
+              "rounded-full px-3 py-1 text-xs font-medium transition-colors border",
               category === cat.value
-                ? "bg-navy-900 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-violet-500/15 text-violet-400 border-violet-500/30"
+                : "bg-[#0d1726] text-[#4a6585] border-[#1e3050] hover:border-[#2a4268]"
             )}
           >
             {cat.label}
