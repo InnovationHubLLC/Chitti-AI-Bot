@@ -22,7 +22,7 @@ export function HeroSection(): React.ReactElement {
             size="lg"
             className="bg-accent-500 hover:bg-accent-600 text-white px-8 py-6 text-lg"
           >
-            <Link href="/sign-up">Start Free Trial</Link>
+            <Link href="/onboarding/step-1">Start Free Trial</Link>
           </Button>
 
           <Button

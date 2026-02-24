@@ -9,7 +9,7 @@ export function Header(): React.ReactElement {
           Chitti
         </Link>
         <Button asChild className="bg-accent-500 hover:bg-accent-600 text-white">
-          <Link href="/sign-up">Start Free Trial</Link>
+          <Link href="/onboarding/step-1">Start Free Trial</Link>
         </Button>
       </div>
     </header>

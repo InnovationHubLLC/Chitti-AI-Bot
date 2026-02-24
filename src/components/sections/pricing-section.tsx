@@ -55,7 +55,7 @@ export function PricingSection(): React.ReactElement {
 
           <CardFooter className="flex flex-col gap-2">
             <Button asChild className="w-full bg-accent-500 hover:bg-accent-600 text-white py-6 text-lg">
-              <Link href="/sign-up">Start Free Trial</Link>
+              <Link href="/onboarding/step-1">Start Free Trial</Link>
             </Button>
             <p className="text-xs text-navy-500 text-center mt-2">
               14-day free trial. No credit card. Cancel anytime.
